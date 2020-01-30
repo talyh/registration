@@ -1,3 +1,5 @@
+For the time being, this is hosted at https://tojam-6526c.firebaseapp.com/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
