@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import * as firebase from "firebase/app";
+import firebaseConfig from "./firebaseConfig";
 
-const App: React.FC = () => {
+import SignInPage from "./views/SignInPage/SignInPage";
+import RegistrationForm from "./views/RegistrationForm/RegistrationForm";
+import { AuthContext } from "./AuthContext";
+
+const App = () => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const [uid, setUid] = useState<string>("");
+  const [user, setUser] = useState<IUser | null>(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContext.Provider value={{ uid, setUid, user, setUser }}>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <SignInPage />;{/* TODO - not true home*/}
+          </Route>
+          <Route exact path="/signin">
+            <SignInPage />
+          </Route>
+          <Route path="/registration/">
+            <RegistrationForm />
+          </Route>
+        </Switch>
+      </Router>
+    </AuthContext.Provider>
   );
-}
+};
 
 export default App;
