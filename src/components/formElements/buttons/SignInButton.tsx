@@ -5,7 +5,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import { useHistory } from "react-router-dom";
 import { AuthContext, IAuthContext } from "../../../AuthContext";
-import { saveUserData } from "../../../utils";
+import { saveUserData, getSavedUserData } from "../../../utils";
 
 interface ISignInButtonProps {
   provider: firebase.auth.AuthProvider;
@@ -18,19 +18,6 @@ const showSignInPopUp = async (provider: firebase.auth.AuthProvider) => {
   // save token so we can skip login if jwt hasn't expired yet
   localStorage.setItem("userToken", result.credential.idToken);
   return result?.user;
-};
-
-const checkIfNewUser = async (uid: string) => {
-  // attempt to retrieve user record to determine if they've created a profile before
-  // TODO - Find a way to abstract this so it's not repeated throughout
-  const usersCollection = firebase.firestore().collection("Users");
-  const docRef = usersCollection.doc(uid);
-  const doc = await docRef.get();
-  if (doc.exists) {
-    return false;
-  } else {
-    return true;
-  }
 };
 
 const SignInButton = ({ children, provider }: ISignInButtonProps) => {
@@ -51,23 +38,20 @@ const SignInButton = ({ children, provider }: ISignInButtonProps) => {
       }
 
       const uid: string = user.uid;
-
-      // TODO IMMEDIATE - Need to load additional user data
-      const userData: IUser = {
-        name: user.displayName,
-        email: user.email,
-        jamsAttended: [new Date().getFullYear()]
-      };
-
-      // TODO - temporary till redux is connected
-      setUid(uid);
-      setUser(userData);
+      let userData: IUser | undefined = await getSavedUserData(uid);
 
       // create a record of the user if they don't have one
-      const isNewUser = await checkIfNewUser(user.uid);
-      if (isNewUser) {
+      if (!userData) {
+        userData = {
+          name: user.displayName,
+          email: user.email,
+          jamsAttended: [new Date().getFullYear()]
+        };
         saveUserData(uid, userData);
       }
+
+      setUid(uid);
+      setUser(userData);
 
       // navigate to registration form
       history.replace("/registration");
