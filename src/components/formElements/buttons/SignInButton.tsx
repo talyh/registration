@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
+import styled from "styled-components";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { AuthContext, IAuthContext } from "../../AuthContext";
+import { AuthContext, IAuthContext } from "../../../AuthContext";
+import { saveUserData } from "../../../utils";
 
 interface ISignInButtonProps {
   provider: firebase.auth.AuthProvider;
@@ -32,16 +33,6 @@ const checkIfNewUser = async (uid: string) => {
   }
 };
 
-const saveNewUser = async (uid: string, userData: IUser) => {
-  if (!uid || !userData) {
-    throw new Error("Invalid user data");
-  }
-
-  // TODO - Find a way to abstract this so it's not repeated throughout
-  const usersCollection = firebase.firestore().collection("Users");
-  await usersCollection.doc(uid).set(userData);
-};
-
 const SignInButton = ({ children, provider }: ISignInButtonProps) => {
   const { setUid, setUser } = useContext(AuthContext) as IAuthContext;
 
@@ -60,6 +51,8 @@ const SignInButton = ({ children, provider }: ISignInButtonProps) => {
       }
 
       const uid: string = user.uid;
+
+      // TODO IMMEDIATE - Need to load additional user data
       const userData: IUser = {
         name: user.displayName,
         email: user.email,
@@ -73,10 +66,10 @@ const SignInButton = ({ children, provider }: ISignInButtonProps) => {
       // create a record of the user if they don't have one
       const isNewUser = await checkIfNewUser(user.uid);
       if (isNewUser) {
-        saveNewUser(uid, userData);
+        saveUserData(uid, userData);
       }
 
-      // TODO - navigate to registration form
+      // navigate to registration form
       history.replace("/registration");
     } catch (error) {
       // TODO - Determine how to handle errors
