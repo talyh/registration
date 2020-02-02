@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Field, useField } from "react-final-form";
 import { FormArea, Label, ErrorMessage } from "../formElements";
+import colors from "../../colors";
 
 interface IOptionGroupProps {
   name: string;
@@ -65,8 +66,8 @@ const CheckBoxAsButtonGroup = styled.div`
 
 const CheckBoxAsButton = styled.div`
   margin: 4px;
-  background-color: #efefef;
-  border: 1px solid #d0d0d0;
+  background-color: ${colors.optionGroup.background};
+  border: 1px solid ${colors.optionGroup.border};
   overflow: auto;
   float: left;
 
@@ -86,12 +87,12 @@ const CheckBoxAsButton = styled.div`
   }
 
   input:checked + span {
-    background-color: #2569c0;
-    color: #ffffff;
+    background-color: ${colors.optionGroup.checked.background};
+    color: ${colors.optionGroup.checked.text};
   }
 
   :hover {
-    color: #ffffff;
-    background-color: #68c025;
+    color: ${colors.optionGroup.hover.text};
+    background-color: ${colors.optionGroup.hover.background};
   }
 `;

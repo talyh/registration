@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import colors from "../../../colors";
 
 interface ISubmitButtonProps {
   children: React.ReactNode;
@@ -18,29 +19,28 @@ const SubmitButton = ({ children, onClick, disabled }: ISubmitButtonProps) => (
 );
 
 const Button = styled.button`
-  font-size: 14px;
-  color: white;
-  background-color: #2569c0;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: ${colors.button.normal.text};
+  background-color: ${colors.button.normal.background};
   padding: 5px;
   width: 200px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-family: "Poppins", sans-serif;
-  font-size: 16px;
   cursor: pointer;
   outline: none;
 
   :hover {
-    box-shadow: rgb(45, 52, 142, 0.3) 0px 0px 5px,
-      inset rgba(45, 52, 142, 0.5) 0px -1px 5px;
-    color: rgb(225, 225, 255, 1);
+    box-shadow: ${colors.button.normal.hover.boxShadowOutset} 0px 0px 5px,
+      inset ${colors.button.normal.hover.boxShadowInset} 0px -1px 5px;
+    color: ${colors.button.normal.hover.text};
   }
 
   :disabled {
-    background-color: #ffffff;
-    color: #2569c0;
+    background-color: ${colors.button.normal.disabled.background};
+    color: ${colors.button.normal.disabled.text};
   }
 `;
 
