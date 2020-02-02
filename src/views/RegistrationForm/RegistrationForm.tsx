@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 import { Form } from "react-final-form";
@@ -6,8 +6,9 @@ import { Input, OptionsGroup } from "../../components/formElements/";
 import { AuthContext, IAuthContext } from "../../AuthContext";
 import SubmitButton from "../../components/formElements/buttons/SubmitButton";
 import { parsePhone, saveUserData } from "../../utils";
+import MessagePop from "../../components/MessagePop";
 
-const RegistrationForm = () => {
+export const RegistrationForm = () => {
   const { uid, user, setUser } = useContext(AuthContext) as IAuthContext;
 
   const checkIfAuthenticated = (uid: string): boolean => uid !== "";
@@ -27,18 +28,19 @@ const RegistrationForm = () => {
     }
     return errors;
   };
+  const submit = async (data: IUser) => {
+    await saveUserData(uid, data);
+    setUser(data);
+  };
 
   const renderPage = () => {
     return (
       <FormContainer>
         <Form
           initialValues={user as IUser}
-          onSubmit={async (data: IUser) => {
-            await saveUserData(uid, data);
-            setUser(data);
-          }}
+          onSubmit={submit}
           validate={validate}
-          render={({ errors, handleSubmit, submitting }) => (
+          render={({ errors, handleSubmit, submitting, submitSucceeded }) => (
             <form onSubmit={handleSubmit}>
               <Input label="Name" name="name" placeholder="Shun Li" required />
               <Input
@@ -84,6 +86,14 @@ const RegistrationForm = () => {
                   Submit
                 </SubmitButton>
               </ButtonContainer>
+              {submitSucceeded && (
+                <MessagePop
+                  type="feedback"
+                  message="Registration Submitted Sucessfully!"
+                  // TODO - Need to better understand user flow to determine what to do here
+                  onConfirm={() => {}}
+                />
+              )}
             </form>
           )}
         />
@@ -111,5 +121,3 @@ const ButtonContainer = styled.div`
   align-items: center;
   height: 50px;
 `;
-
-export default RegistrationForm;
