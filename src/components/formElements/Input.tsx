@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Field, useField } from "react-final-form";
 import { FormArea, Label, ErrorMessage } from "../formElements";
+import colors from "../../colors";
 
 interface IInputProps {
   name: string;
@@ -42,13 +43,6 @@ const FormField = styled(Field)`
   padding: 10px 20px 0px 20px;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
-  border: 1px solid rgba(164, 164, 164, 0.5);
+  border: 1px solid ${colors.textField.border};
   height: 50px;
-
-  :focus + ${Label}, :valid + ${Label} {
-    font-size: 75%;
-    transform: translate3d(0, -100%, 0);
-    opacity: 1;
-    color: black !important;
-  }
 `;

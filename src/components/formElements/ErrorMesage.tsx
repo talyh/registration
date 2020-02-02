@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useField } from "react-final-form";
+import colors from "../../colors";
 
 export const ErrorMessage = ({ name }: any) => {
   const {
@@ -14,8 +15,8 @@ export const ErrorMessage = ({ name }: any) => {
 const StyledErrorMessage = styled.div`
   position: absolute;
   right: 2vw;
-  background: #c02549;
-  color: #ffffff;
+  background: ${colors.errorMessage.background.final};
+  color: ${colors.errorMessage.text};
   animation: 0.5s ease-in-out 0s 1 animateIn;
   padding: 5px 10px;
   align-self: center;
@@ -23,7 +24,7 @@ const StyledErrorMessage = styled.div`
   @keyframes animateIn {
     0% {
       opacity: 0;
-      background-color: #2569c0;
+      background-color: ${colors.errorMessage.background.initial};
       transform: translateX(0);
     }
     30% {
@@ -41,4 +42,5 @@ const StyledErrorMessage = styled.div`
     100% {
       transform: translateX(0);
     }
+  }
 `;

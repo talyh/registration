@@ -6,6 +6,7 @@ import "firebase/firestore";
 import { useHistory } from "react-router-dom";
 import { AuthContext, IAuthContext } from "../../../AuthContext";
 import { saveUserData, getSavedUserData } from "../../../utils";
+import colors from "../../../colors";
 
 interface ISignInButtonProps {
   provider: firebase.auth.AuthProvider;
@@ -16,7 +17,7 @@ const showSignInPopUp = async (provider: firebase.auth.AuthProvider) => {
   const result: any = await firebase.auth().signInWithPopup(provider);
 
   // save token so we can skip login if jwt hasn't expired yet
-  localStorage.setItem("userToken", result.credential.idToken);
+  await localStorage.setItem("userToken", result.credential.idToken);
   return result?.user;
 };
 
@@ -27,7 +28,7 @@ const SignInButton = ({ children, provider }: ISignInButtonProps) => {
     throw new Error("Couldn't resolve provider");
   }
 
-  let history = useHistory();
+  const history = useHistory();
 
   const signIn = async (provider: firebase.auth.AuthProvider) => {
     try {
@@ -65,9 +66,10 @@ const SignInButton = ({ children, provider }: ISignInButtonProps) => {
 };
 
 const Button = styled.button`
-  font-size: 14px;
-  color: white;
-  background-color: #2569c0;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: ${colors.button.normal.text};
+  background-color: ${colors.button.normal.background};
   padding: 5px;
   width: 200px;
   height: 40px;
@@ -75,6 +77,18 @@ const Button = styled.button`
   align-items: center;
   justify-content: space-around;
   cursor: pointer;
+  outline: none;
+
+  :hover {
+    box-shadow: ${colors.button.normal.hover.boxShadowOutset} 0px 0px 5px,
+      inset ${colors.button.normal.hover.boxShadowInset} 0px -1px 5px;
+    color: ${colors.button.normal.hover.text};
+  }
+
+  :disabled {
+    background-color: ${colors.button.normal.disabled.background};
+    color: ${colors.button.normal.disabled.text};
+  }
 `;
 
 export default SignInButton;

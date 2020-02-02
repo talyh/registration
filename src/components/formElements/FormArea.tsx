@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import colors from "../../colors";
 
 interface IFormAreaProps {
   error?: boolean;
@@ -14,18 +15,18 @@ export const FormArea = styled.div<IFormAreaProps>`
   margin-top: 10px;
   color: ${props => {
     if (props.active) {
-      return "#2569c0";
+      return colors.formArea.text.highlight;
     } else if (props.error) {
-      return "#c02549";
+      return colors.formArea.text.error;
     } else {
-      return "#a4a4a4";
+      return colors.text.primary;
     }
   }};
   background-color: ${props => {
     if (props.active) {
-      return "#2569c0";
+      return colors.formArea.background.highlight;
     } else if (props.error) {
-      return "#c02549";
+      return colors.formArea.background.error;
     }
   }};
   height: ${props => props.height || "70px"};

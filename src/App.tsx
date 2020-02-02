@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import * as firebase from "firebase/app";
 import firebaseConfig from "./firebaseConfig";
 
-import SignInPage from "./views/SignInPage/SignInPage";
-import RegistrationForm from "./views/RegistrationForm/RegistrationForm";
+import { SignInPage, RegistrationForm } from "./views";
 import { AuthContext } from "./AuthContext";
+import Header from "./components/Header";
 
 const App = () => {
   if (!firebase.apps.length) {
@@ -19,12 +19,14 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <SignInPage />;{/* TODO - not true home*/}
+            {/* TODO - not true home*/}
+            <SignInPage />
           </Route>
           <Route exact path="/signin">
             <SignInPage />
           </Route>
           <Route path="/registration/">
+            <Header />
             <RegistrationForm />
           </Route>
         </Switch>
