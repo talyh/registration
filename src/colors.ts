@@ -47,6 +47,18 @@ export default {
       disabled: {
         text: baseGrey
       }
+    },
+    onMessagePop: {
+      text: baseBlue,
+      background: white,
+      hover: {
+        text: white,
+        background: lightBlue_50
+      },
+      disabled: {
+        background: white,
+        text: baseBlue
+      }
     }
   },
   formLabel: {
@@ -83,6 +95,13 @@ export default {
     hover: {
       text: white,
       background: baseGreen
+    }
+  },
+  messagePop: {
+    screenbackground: ligthGrey_50,
+    feedback: {
+      text: white,
+      background: baseBlue
     }
   }
 };
