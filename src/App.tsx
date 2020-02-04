@@ -6,6 +6,7 @@ import firebaseConfig from "./firebaseConfig";
 
 import { store } from "./store";
 import Header from "./views/Header/Header";
+import Home from "./views/Home";
 import SignInPage from "./views/SignInPage";
 import RegistrationForm from "./views/RegistrationForm";
 
@@ -19,8 +20,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            {/* TODO - not true home*/}
-            <SignInPage redirect="/registration" />
+            <Home />
           </Route>
           <Route exact path="/signin">
             <SignInPage redirect="/registration" />
