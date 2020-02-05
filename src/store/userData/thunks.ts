@@ -41,8 +41,6 @@ export const saveUserDataThunk = (uid: string, userData: IUser) => async (
 ) => {
   dispatch(userDataSaveStart());
 
-  console.log("saving user", userData);
-
   try {
     await saveUserData(uid, userData);
 

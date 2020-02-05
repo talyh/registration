@@ -4,23 +4,17 @@ import Spinner from "../../Spinner";
 import colors from "../../../colors";
 
 interface ISubmitButtonProps {
-  onClick?: (arg0: React.MouseEvent) => void;
   disabled?: boolean;
   text?: string;
   submitting?: boolean;
 }
 
 const SubmitButton = ({
-  onClick,
   disabled,
   text = "Submit",
   submitting = false
 }: ISubmitButtonProps) => (
-  <Button
-    onClick={ev => onClick && onClick(ev)}
-    type="submit"
-    disabled={disabled}
-  >
+  <Button type="submit" disabled={disabled}>
     <Label>{text}</Label>
     {submitting && <Spinner display="inline" size="small" color="dark" />}
   </Button>
