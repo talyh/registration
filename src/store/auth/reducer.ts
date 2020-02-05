@@ -4,12 +4,14 @@ interface IAuthState {
   uid: string;
   loading: boolean;
   error: Error | null;
+  state: "newSession" | "signedIn" | "signedOut";
 }
 
 export const initialState: IAuthState = {
   uid: "",
   loading: false,
-  error: null
+  error: null,
+  state: "newSession"
 };
 
 export const reducer = (
@@ -23,7 +25,8 @@ export const reducer = (
       return {
         uid: action.payload,
         loading: false,
-        error: null
+        error: null,
+        state: "signedIn"
       };
     case actionTypes.SIGN_IN_ERROR:
       return {
@@ -37,7 +40,8 @@ export const reducer = (
       return {
         uid: "",
         loading: false,
-        error: null
+        error: null,
+        state: "signedOut"
       };
     case actionTypes.SIGN_OUT_ERROR:
       return {

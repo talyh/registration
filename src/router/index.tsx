@@ -17,7 +17,7 @@ const CustomRouter = () => {
           <SignInPage redirect={routes.registration} />
         </Route>
         <Route path={routes.registration}>
-          <Header />
+          <Header redirect={routes.home} />
           <RegistrationForm />
         </Route>
       </Switch>

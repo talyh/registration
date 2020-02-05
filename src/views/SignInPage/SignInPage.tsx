@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Redirect } from "react-router-dom";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import { useStore } from "./hooks";
+import { useStore, useRouter } from "./hooks";
 import SignInButton from "../../components/formElements/buttons/SignInButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -13,12 +12,10 @@ interface ISignInPageProps {
 }
 
 const SignInPage = ({ redirect }: ISignInPageProps) => {
-  const { uid, loading, signIn } = useStore();
+  const { loading, signIn } = useStore(redirect);
+  useRouter(redirect);
 
-  // TODO - this should probably be a Util, especially considering token validation
-  const checkIfAuthenticated = (uid: string): boolean => uid !== "";
-  const redirectAfterSignIn = () => <Redirect to={redirect} />;
-  const renderPage = () => (
+  return (
     <SignInButton
       onClick={() => signIn(new firebase.auth.GoogleAuthProvider())}
       disabled={loading}
@@ -27,12 +24,6 @@ const SignInPage = ({ redirect }: ISignInPageProps) => {
       Login with Google
     </SignInButton>
   );
-
-  if (!checkIfAuthenticated(uid)) {
-    return renderPage();
-  } else {
-    return redirectAfterSignIn();
-  }
 };
 
 export default SignInPage;
