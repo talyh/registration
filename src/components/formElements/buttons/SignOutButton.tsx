@@ -1,25 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import { AuthContext, IAuthContext } from "../../../AuthContext";
 import colors from "../../../colors";
 
-const SignOutButton = () => {
-  const { setUid, setUser } = useContext(AuthContext) as IAuthContext;
-  const history = useHistory();
+interface ISignOutButtonProps {
+  onClick: () => void;
+  disabled: boolean;
+}
 
-  const signOut = async () => {
-    // clean local token and state
-    await localStorage.removeItem("userToken");
-    setUid("");
-    setUser(null);
-
-    // navigate back to login page
-    history.replace("/");
-  };
-
-  return <Button onClick={signOut}>Sign Out</Button>;
-};
+const SignOutButton = ({ onClick, disabled }: ISignOutButtonProps) => (
+  <Button onClick={() => onClick && onClick()} disabled={disabled}>
+    Sign Out
+  </Button>
+);
 
 const Button = styled.button`
   font-size: 14px;

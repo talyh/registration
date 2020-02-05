@@ -1,20 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import Spinner from "../../Spinner";
 import colors from "../../../colors";
 
 interface ISubmitButtonProps {
-  children: React.ReactNode;
-  onClick?: (arg0: React.MouseEvent) => void;
   disabled?: boolean;
+  text?: string;
+  submitting?: boolean;
 }
 
-const SubmitButton = ({ children, onClick, disabled }: ISubmitButtonProps) => (
-  <Button
-    onClick={ev => onClick && onClick(ev)}
-    type="submit"
-    disabled={disabled}
-  >
-    {children}
+const SubmitButton = ({
+  disabled,
+  text = "Submit",
+  submitting = false
+}: ISubmitButtonProps) => (
+  <Button type="submit" disabled={disabled}>
+    <Label>{text}</Label>
+    {submitting && <Spinner display="inline" size="small" color="dark" />}
   </Button>
 );
 
@@ -42,6 +44,10 @@ const Button = styled.button`
     background-color: ${colors.button.normal.disabled.background};
     color: ${colors.button.normal.disabled.text};
   }
+`;
+
+const Label = styled.span`
+  flex: 2 1 auto;
 `;
 
 export default SubmitButton;

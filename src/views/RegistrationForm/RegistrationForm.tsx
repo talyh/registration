@@ -1,16 +1,19 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 import { Form } from "react-final-form";
+import { useStore } from "./hooks";
+import { parsePhone } from "../../utils";
 import { Input, OptionsGroup } from "../../components/formElements/";
-import { AuthContext, IAuthContext } from "../../AuthContext";
 import SubmitButton from "../../components/formElements/buttons/SubmitButton";
-import { parsePhone, saveUserData } from "../../utils";
 import MessagePop from "../../components/MessagePop";
+import Spinner from "../../components/Spinner";
+import * as formValues from "./formConfig";
 
-export const RegistrationForm = () => {
-  const { uid, user, setUser } = useContext(AuthContext) as IAuthContext;
+const RegistrationForm = () => {
+  const { uid, user, loading, saving, saveUser } = useStore();
 
+  // TODO - this should probably be a Util, especially considering token validation
   const checkIfAuthenticated = (uid: string): boolean => uid !== "";
   const validate = (values: any) => {
     const errors: any = {};
@@ -29,8 +32,7 @@ export const RegistrationForm = () => {
     return errors;
   };
   const submit = async (data: IUser) => {
-    await saveUserData(uid, data);
-    setUser(data);
+    await saveUser(uid, data);
   };
 
   const renderPage = () => {
@@ -59,20 +61,7 @@ export const RegistrationForm = () => {
               <OptionsGroup
                 name="jamsAttended"
                 label="Jams Attended"
-                valuesArray={[
-                  2020,
-                  2018,
-                  2017,
-                  2016,
-                  2015,
-                  2014,
-                  2013,
-                  2012,
-                  2011,
-                  2010,
-                  2009,
-                  2008
-                ]}
+                valuesArray={formValues.jamsAttended}
                 required
                 shouldDisable={(option: number) =>
                   option === new Date().getFullYear()
@@ -81,12 +70,14 @@ export const RegistrationForm = () => {
               />
               <ButtonContainer>
                 <SubmitButton
-                  disabled={submitting || Object.keys(errors).length > 0}
-                >
-                  Submit
-                </SubmitButton>
+                  disabled={
+                    submitting || saving || Object.keys(errors).length > 0
+                  }
+                  text="Submit"
+                  submitting={submitting || saving}
+                />
               </ButtonContainer>
-              {submitSucceeded && (
+              {submitSucceeded && !saving && (
                 <MessagePop
                   type="feedback"
                   message="Registration Submitted Sucessfully!"
@@ -103,6 +94,9 @@ export const RegistrationForm = () => {
   const redirectToSignIn = () => <Redirect to="/signin" />;
 
   if (checkIfAuthenticated(uid)) {
+    if (loading) {
+      return <Spinner />;
+    }
     return renderPage();
   } else {
     return redirectToSignIn();
@@ -121,3 +115,5 @@ const ButtonContainer = styled.div`
   align-items: center;
   height: 50px;
 `;
+
+export default RegistrationForm;

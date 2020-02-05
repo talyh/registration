@@ -1,29 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import * as firebase from "firebase/app";
 import firebaseConfig from "./firebaseConfig";
 
-import { SignInPage, RegistrationForm } from "./views";
-import { AuthContext } from "./AuthContext";
-import Header from "./components/Header";
+import { store } from "./store";
+import Header from "./views/Header/Header";
+import SignInPage from "./views/SignInPage";
+import RegistrationForm from "./views/RegistrationForm";
 
 const App = () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
-  const [uid, setUid] = useState<string>("");
-  const [user, setUser] = useState<IUser | null>(null);
 
   return (
-    <AuthContext.Provider value={{ uid, setUid, user, setUser }}>
+    <Provider store={store}>
       <Router>
         <Switch>
           <Route exact path="/">
             {/* TODO - not true home*/}
-            <SignInPage />
+            <SignInPage redirect="/registration" />
           </Route>
           <Route exact path="/signin">
-            <SignInPage />
+            <SignInPage redirect="/registration" />
           </Route>
           <Route path="/registration/">
             <Header />
@@ -31,7 +31,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </AuthContext.Provider>
+    </Provider>
   );
 };
 

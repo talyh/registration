@@ -103,5 +103,9 @@ export default {
       text: white,
       background: baseBlue
     }
+  },
+  spinner: {
+    light: ligthGrey_50,
+    dark: baseBlue
   }
 };
