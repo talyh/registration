@@ -5,21 +5,21 @@ export const SIGN_OUT_START = "AUTH/SIGN_OUT_START";
 export const SIGN_OUT_SUCCESS = "AUTH/SIGN_OUT_SUCCESS";
 export const SIGN_OUT_ERROR = "AUTH/SIGN_OUT_ERROR";
 
-export interface SignInStartAction {
+interface SignInStartAction {
   type: typeof SIGN_IN_START;
 }
 
-export interface SignInSuccessAction {
+interface SignInSuccessAction {
   type: typeof SIGN_IN_SUCCESS;
   payload: string;
 }
 
-export interface SignInErrorAction {
+interface SignInErrorAction {
   type: typeof SIGN_IN_ERROR;
   payload: Error;
 }
 
-export interface SignOutStartAction {
+interface SignOutStartAction {
   type: typeof SIGN_OUT_START;
 }
 
@@ -27,7 +27,7 @@ export interface SignOutSuccessAction {
   type: typeof SIGN_OUT_SUCCESS;
 }
 
-export interface SignOutErrorAction {
+interface SignOutErrorAction {
   type: typeof SIGN_OUT_ERROR;
   payload: Error;
 }
