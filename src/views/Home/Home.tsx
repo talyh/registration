@@ -9,10 +9,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import colors from "../../colors";
+import { jamName } from "../../jamConfig";
 
 const Home = () => (
   <Container>
-    <Intro>Hi there! What are you intersted in for this jam?</Intro>
+    <Intro>{`Hi there! What are you intersted in for ${jamName}?`}</Intro>
     <InterestIconsContainer>
       <Link to="/registration">
         <InterestIcon>
@@ -101,7 +102,7 @@ const InterestIcon = styled.div`
 `;
 
 const IconContainer = styled.div`
-  font-size: 40px;
+  font-size: 50px;
 `;
 
 const Label = styled.div`

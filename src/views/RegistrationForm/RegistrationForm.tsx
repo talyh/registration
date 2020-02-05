@@ -8,7 +8,7 @@ import { Input, OptionsGroup } from "../../components/formElements/";
 import SubmitButton from "../../components/formElements/buttons/SubmitButton";
 import MessagePop from "../../components/MessagePop";
 import Spinner from "../../components/Spinner";
-import * as formValues from "./formConfig";
+import * as formValues from "../../jamConfig";
 
 const RegistrationForm = () => {
   const { uid, user, loading, saving, saveUser } = useStore();
