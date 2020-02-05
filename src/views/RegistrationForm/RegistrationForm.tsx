@@ -9,6 +9,7 @@ import SubmitButton from "../../components/formElements/buttons/SubmitButton";
 import MessagePop from "../../components/MessagePop";
 import Spinner from "../../components/Spinner";
 import * as formValues from "../../jamConfig";
+import routes from "../../router/routes";
 
 const RegistrationForm = () => {
   const { uid, user, loading, saving, saveUser } = useStore();
@@ -91,7 +92,7 @@ const RegistrationForm = () => {
       </FormContainer>
     );
   };
-  const redirectToSignIn = () => <Redirect to="/signin" />;
+  const redirectToSignIn = () => <Redirect to={routes.signIn} />;
 
   if (checkIfAuthenticated(uid)) {
     if (loading) {
