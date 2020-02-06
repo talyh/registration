@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPeopleCarry,
   faQuestion,
@@ -8,6 +7,7 @@ import {
   faGamepad
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import InterestIcon from "../../components/InterestIcon";
 import colors from "../../colors";
 import { jamName } from "../../jamConfig";
 
@@ -16,42 +16,22 @@ const Home = () => (
     <Intro>{`Hi there! What are you intersted in for ${jamName}?`}</Intro>
     <InterestIconsContainer>
       <Link to="/registration">
-        <InterestIcon>
-          <IconContainer>
-            <FontAwesomeIcon icon={faGamepad} />
-          </IconContainer>
-          <Label>Jammer</Label>
-        </InterestIcon>
+        <InterestIcon label="Jammer" icon={faGamepad} />
       </Link>
       <a
         href={`mailto:goat@tojam.ca?Subject=[TOJam ${new Date().getFullYear()}] - Volunteer`}
       >
-        <InterestIcon>
-          <IconContainer>
-            <FontAwesomeIcon icon={faPeopleCarry} />
-          </IconContainer>
-          <Label>Volunteer</Label>
-        </InterestIcon>
+        <InterestIcon label="Volunteer" icon={faPeopleCarry} />
       </a>
       <a
         href={`mailto:goat@tojam.ca?Subject=[TOJam ${new Date().getFullYear()}] - Media Inquiry`}
       >
-        <InterestIcon>
-          <IconContainer>
-            <FontAwesomeIcon icon={faVideo} />
-          </IconContainer>
-          <Label>Media</Label>
-        </InterestIcon>
+        <InterestIcon label="Media" icon={faVideo} />
       </a>
       <a
         href={`mailto:goat@tojam.ca?Subject=[TOJam ${new Date().getFullYear()}] - General Inquiry`}
       >
-        <InterestIcon>
-          <IconContainer>
-            <FontAwesomeIcon icon={faQuestion} />
-          </IconContainer>
-          <Label>General Inquiry</Label>
-        </InterestIcon>
+        <InterestIcon label="General Inquiry" icon={faQuestion} />
       </a>
     </InterestIconsContainer>
   </Container>
@@ -80,33 +60,6 @@ const InterestIconsContainer = styled.div`
   a {
     text-decoration: none;
   }
-`;
-
-const InterestIcon = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 160px;
-  width: 180px;
-  color: ${colors.interestIcon.text};
-  background-color: ${colors.interestIcon.background};
-  margin: 20px;
-  padding: 0px 20px;
-  cursor: pointer;
-  outline: none;
-
-  :hover {
-    background-color: ${colors.interestIcon.hover.background};
-  }
-`;
-
-const IconContainer = styled.div`
-  font-size: 50px;
-`;
-
-const Label = styled.div`
-  font-size: 20px;
 `;
 
 export default Home;
