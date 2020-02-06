@@ -1,3 +1,5 @@
+export const jamName = `TOJam ${new Date().getFullYear()}`;
+
 export const jamsAttended = [
   2020,
   2018,

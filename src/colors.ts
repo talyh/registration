@@ -107,5 +107,10 @@ export default {
   spinner: {
     light: ligthGrey_50,
     dark: baseBlue
+  },
+  interestIcon: {
+    text: white,
+    background: baseBlue,
+    hover: { background: baseGreen }
   }
 };

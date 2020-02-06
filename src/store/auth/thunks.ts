@@ -2,7 +2,6 @@ import { Dispatch } from "redux";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-
 import {
   signInStart,
   signInSuccess,
@@ -41,6 +40,7 @@ export const signInThunk = (provider: firebase.auth.AuthProvider) => async (
     dispatch(
       loadUserDataThunk(uid, { name: user.name, email: user.email }) as any
     );
+
     return dispatch(signInSuccess(uid));
   } catch (error) {
     return dispatch(signInError(error));
@@ -51,13 +51,9 @@ export const signOutThunk = () => async (dispatch: Dispatch) => {
   try {
     dispatch(signOutStart());
 
-    // const history = useHistory();
-
     // clean local token and state
     await localStorage.removeItem("userToken");
 
-    // navigate back to login page
-    // history.replace("/");
     return dispatch(signOutSuccess());
   } catch (error) {
     return dispatch(signOutError(error));

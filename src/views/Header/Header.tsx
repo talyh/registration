@@ -1,16 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { useStore } from "./hooks";
+import { useStore, useRouter } from "./hooks";
 import SignOutButton from "../../components/formElements/buttons/SignOutButton";
 import colors from "../../colors";
+import { jamName } from "../../jamConfig";
 
-// TODO - review to determine best way to implement redirect after signOut
-const Header = () => {
+interface IHeaderProps {
+  redirect: string;
+}
+
+const Header = ({ redirect }: IHeaderProps) => {
   const { signOut, loading } = useStore();
+  useRouter(redirect);
 
   return (
     <StyledHeader>
-      <Title>TOJam {`${new Date().getFullYear()}`} Registration</Title>
+      <Title>{jamName} Registration</Title>
       <SignOutButton onClick={signOut} disabled={loading} />
     </StyledHeader>
   );
