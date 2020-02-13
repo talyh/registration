@@ -1,17 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useStore, useRouter } from "./hooks";
+import { useStore } from "./hooks";
 import SignOutButton from "../../components/formElements/buttons/SignOutButton";
 import colors from "../../colors";
 import { jamName } from "../../jamConfig";
 
-interface IHeaderProps {
-  redirect: string;
-}
-
-const Header = ({ redirect }: IHeaderProps) => {
+const Header = () => {
   const { signOut, loading } = useStore();
-  useRouter(redirect);
 
   return (
     <StyledHeader>

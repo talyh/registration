@@ -51,12 +51,7 @@ export const reducer = (
         error: action.payload
       };
     case SIGN_OUT_SUCCESS:
-      return {
-        user: null,
-        loading: false,
-        saving: false,
-        error: null
-      };
+      return initialState;
     default:
       return state;
   }

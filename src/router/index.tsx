@@ -14,10 +14,10 @@ const CustomRouter = () => {
           <Home />
         </Route>
         <Route exact path={routes.signIn}>
-          <SignInPage redirect={routes.registration} />
+          <SignInPage />
         </Route>
         <Route path={routes.registration}>
-          <Header redirect={routes.home} />
+          <Header />
           <RegistrationForm />
         </Route>
       </Switch>

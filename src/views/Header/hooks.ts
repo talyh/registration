@@ -1,32 +1,17 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { AppState } from "../../store";
 import { signOutThunk } from "../../store/auth/thunks";
+import { useHistory } from "react-router-dom";
 
 export const useStore = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loading = useSelector(({ auth }: AppState) => auth.loading);
-  const signOut = () => dispatch(signOutThunk());
+  const signOut = () => dispatch(signOutThunk(history));
 
   return {
     loading,
     signOut
   };
 };
-
-export const useRouter = (redirect: string) => {
-  const history = useHistory();
-
-  const authState = useSelector(({ auth }: AppState) => auth.state);
-
-  const checkIfSignedOut = () => authState === "signedOut";
-  const redirectAfterSignOut = () => {
-    checkIfSignedOut() && history.push(redirect);
-  };
-
-  useEffect(redirectAfterSignOut);
-};
-
-export default useStore;

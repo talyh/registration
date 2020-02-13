@@ -16,30 +16,42 @@ const showSignInPopUp = async (provider: firebase.auth.AuthProvider) => {
   const result: any = await firebase.auth().signInWithPopup(provider);
 
   if (result?.user) {
-    // save token so we can skip login if jwt hasn't expired yet
-    await localStorage.setItem("userToken", result.credential.idToken);
     return result?.user;
   } else {
     throw new Error("Error signing in");
   }
 };
 
-export const signInThunk = (provider: firebase.auth.AuthProvider) => async (
-  dispatch: Dispatch
-) => {
+export const signInThunk = (
+  provider?: firebase.auth.AuthProvider,
+  user?: firebase.User,
+  history?: any
+) => async (dispatch: Dispatch) => {
   try {
     dispatch(signInStart());
-    const user = await showSignInPopUp(provider);
 
-    if (!user) {
-      throw new Error("Invalid user");
+    let currentUser = user;
+
+    if (!currentUser) {
+      if (provider) {
+        currentUser = await showSignInPopUp(provider);
+      }
+
+      if (!currentUser) {
+        throw new Error("Invalid user");
+      }
     }
 
-    const uid: string = user.uid;
+    const uid: string = currentUser.uid;
     // QUESTION - WHYYYYY TS, WHYYYYYY?
     dispatch(
-      loadUserDataThunk(uid, { name: user.name, email: user.email }) as any
+      loadUserDataThunk(uid, {
+        name: currentUser.displayName || "",
+        email: currentUser.email || ""
+      }) as any
     );
+
+    history.push("/registration"); // TODO IMMEDIATE - this shouldn't be hardcoded
 
     return dispatch(signInSuccess(uid));
   } catch (error) {
@@ -47,12 +59,13 @@ export const signInThunk = (provider: firebase.auth.AuthProvider) => async (
   }
 };
 
-export const signOutThunk = () => async (dispatch: Dispatch) => {
+export const signOutThunk = (history?: any) => async (dispatch: Dispatch) => {
   try {
     dispatch(signOutStart());
 
-    // clean local token and state
-    await localStorage.removeItem("userToken");
+    await firebase.auth().signOut();
+
+    history.push("/"); // TODO IMMEDIATE - this shouldn't be hardcoded
 
     return dispatch(signOutSuccess());
   } catch (error) {

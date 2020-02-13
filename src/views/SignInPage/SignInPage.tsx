@@ -1,19 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import * as firebase from "firebase/app";
-import "firebase/auth";
-import { useStore, useRouter } from "./hooks";
-import SignInButton from "../../components/formElements/buttons/SignInButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import SignInButton from "../../components/formElements/buttons/SignInButton";
+import { useStore } from "./hooks";
+import { usePersistentAuth } from "../../sharedHooks/";
 
-interface ISignInPageProps {
-  redirect: string; // TODO - This should probably be an enum
-}
-
-const SignInPage = ({ redirect }: ISignInPageProps) => {
-  const { loading, signIn } = useStore(redirect);
-  useRouter(redirect);
+const SignInPage = () => {
+  usePersistentAuth(); // TODO IMMEDIATE - determine if this belongs here
+  const { loading, signIn } = useStore();
 
   return (
     <SignInButton
