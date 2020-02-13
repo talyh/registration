@@ -61,6 +61,15 @@ export default {
       }
     }
   },
+  formSection: {
+    container: {
+      border: ligthGrey_30
+    },
+    label: {
+      background: white,
+      text: baseBlue
+    }
+  },
   formLabel: {
     background: white,
     required: baseRed

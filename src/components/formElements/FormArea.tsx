@@ -9,10 +9,11 @@ interface IFormAreaProps {
 }
 
 export const FormArea = styled.div<IFormAreaProps>`
+  width: 98%;
   position: relative;
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin: 10px 0px;
   color: ${props => {
     if (props.active) {
       return colors.formArea.text.highlight;

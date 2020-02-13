@@ -4,7 +4,11 @@ import { Redirect } from "react-router-dom";
 import { Form } from "react-final-form";
 import { useStore } from "./hooks";
 import { parsePhone } from "../../utils";
-import { Input, OptionsGroup } from "../../components/formElements/";
+import {
+  Input,
+  OptionsGroup,
+  FormSection
+} from "../../components/formElements/";
 import SubmitButton from "../../components/formElements/buttons/SubmitButton";
 import MessagePop from "../../components/MessagePop";
 import Spinner from "../../components/Spinner";
@@ -45,20 +49,27 @@ const RegistrationForm = () => {
           validate={validate}
           render={({ errors, handleSubmit, submitting, submitSucceeded }) => (
             <form onSubmit={handleSubmit}>
-              <Input label="Name" name="name" placeholder="Shun Li" required />
-              <Input
-                label="Email"
-                name="email"
-                type="email"
-                placeholder="shunLi@streetFighter.com"
-                required
-              />
-              <Input
-                label="Phone"
-                name="phone"
-                parse={parsePhone}
-                placeholder="(555) 555-5555"
-              />
+              <FormSection label="The Basics">
+                <Input
+                  label="Name"
+                  name="name"
+                  placeholder="Shun Li"
+                  required
+                />
+                <Input
+                  label="Email"
+                  name="email"
+                  type="email"
+                  placeholder="shunLi@streetFighter.com"
+                  required
+                />
+                <Input
+                  label="Phone"
+                  name="phone"
+                  parse={parsePhone}
+                  placeholder="(555) 555-5555"
+                />
+              </FormSection>
               <OptionsGroup
                 name="jamsAttended"
                 label="Jams Attended"

@@ -43,6 +43,6 @@ const FormField = styled(Field)`
   padding: 10px 20px 0px 20px;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
-  border: 1px solid ${colors.textField.border};
+  border: thin solid ${colors.textField.border};
   height: 50px;
 `;
