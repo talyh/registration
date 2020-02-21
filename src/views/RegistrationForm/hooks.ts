@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../store";
 import { saveUserDataThunk } from "../../store/userData/thunks";
+import { User } from "../../typings/user";
 
 export const useStore = () => {
   const dispatch = useDispatch();
@@ -9,7 +10,7 @@ export const useStore = () => {
   const user = useSelector(({ userData }: AppState) => userData.user);
   const loading = useSelector(({ userData }: AppState) => userData.loading);
   const saving = useSelector(({ userData }: AppState) => userData.saving);
-  const saveUser = (uid: string, user: IUser) =>
+  const saveUser = (uid: string, user: User) =>
     dispatch(saveUserDataThunk(uid, user));
 
   return {

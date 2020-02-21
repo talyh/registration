@@ -13,7 +13,7 @@ export const FormArea = styled.div<IFormAreaProps>`
   position: relative;
   display: flex;
   align-items: center;
-  margin: 10px 0px;
+  margin: 5px 0px;
   color: ${props => {
     if (props.active) {
       return colors.formArea.text.highlight;

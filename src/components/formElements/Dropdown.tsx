@@ -4,41 +4,33 @@ import { Field, useField } from "react-final-form";
 import { FormArea, Label, ErrorMessage } from "../formElements";
 import colors from "../../colors";
 
-interface IInputProps {
+interface IDropdownProps {
   name: string;
-  type?: string;
-  placeholder?: string;
   label: string;
+  values: Array<string | number>;
   required?: boolean;
-  parse?: any;
-  maxLength?: number;
-  component?: "input" | "textarea";
 }
 
-export const Input = ({
+export const Dropdown = ({
   name,
-  type = "text",
-  placeholder,
   label,
-  required = false,
-  parse,
-  maxLength,
-  component = "input"
-}: IInputProps) => {
+  values,
+  required = false
+}: IDropdownProps) => {
   const { meta } = useField(name);
   return (
     <FormArea active={meta.active} error={meta.error}>
       <Label required={required} htmlFor={name} display="above">
         {label}
       </Label>
-      <FormField
-        name={name}
-        placeholder={placeholder}
-        type={type}
-        parse={parse}
-        component={component}
-        maxLength={maxLength}
-      />
+      <FormField name={name} component="select">
+        {!required && <option value="">----Select a value----</option>}
+        {values.map(value => (
+          <option value={value} key={value}>
+            {value}
+          </option>
+        ))}
+      </FormField>
       <ErrorMessage name={name} />
     </FormArea>
   );
@@ -52,4 +44,5 @@ const FormField = styled(Field)`
   font-size: 16px;
   border: thin solid ${colors.textField.border};
   height: 50px;
+  background-color: ${colors.dropdown.background};
 `;

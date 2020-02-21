@@ -1,8 +1,9 @@
 import * as actionTypes from "./actionTypes";
 import { SignOutSuccessAction, SIGN_OUT_SUCCESS } from "../auth/actionTypes";
+import { User } from "../../typings/user";
 
 interface IUserDataState {
-  user: IUser | null;
+  user: User | null;
   loading: boolean;
   saving: boolean;
   error: Error | null;

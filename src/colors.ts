@@ -63,7 +63,7 @@ export default {
   },
   formSection: {
     container: {
-      border: ligthGrey_30
+      border: baseGrey
     },
     label: {
       background: white,
@@ -87,6 +87,9 @@ export default {
   textField: {
     border: ligthGrey_50
   },
+  dropdown: {
+    background: white
+  },
   errorMessage: {
     background: {
       initial: baseBlue,
@@ -104,6 +107,25 @@ export default {
     hover: {
       text: white,
       background: baseGreen
+    }
+  },
+  datePicker: {
+    container: {
+      border: lightBlue_50,
+      background: white
+    },
+    calendar: {
+      header: {
+        background: baseBlue,
+        text: white
+      },
+      selected: {
+        background: baseBlue,
+        text: white
+      }
+    },
+    input: {
+      background: transparent
     }
   },
   messagePop: {

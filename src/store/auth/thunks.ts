@@ -38,7 +38,11 @@ export const signInThunk = (provider: firebase.auth.AuthProvider) => async (
     const uid: string = user.uid;
     // QUESTION - WHYYYYY TS, WHYYYYYY?
     dispatch(
-      loadUserDataThunk(uid, { name: user.name, email: user.email }) as any
+      loadUserDataThunk(uid, {
+        name: user.displayName,
+        email: user.email,
+        jamsAttended: [new Date().getFullYear()]
+      }) as any
     );
 
     return dispatch(signInSuccess(uid));

@@ -40,7 +40,12 @@ export const OptionsGroup = ({
 
   return (
     <FormArea height={height} error={meta.error}>
-      <Label required={required} style={{ top: 0 }}>
+      <Label
+        required={required}
+        htmlFor={name}
+        display="above"
+        style={{ top: 0 }}
+      >
         {label}
       </Label>
       <CheckBoxAsButtonGroup>

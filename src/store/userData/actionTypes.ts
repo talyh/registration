@@ -1,3 +1,5 @@
+import { User } from "../../typings/user";
+
 export const USER_DATA_LOAD_START = "USER_DATA/LOAD_START";
 export const USER_DATA_LOAD_SUCCESS = "USER_DATA/LOAD_SUCCESS";
 export const USER_DATA_LOAD_ERROR = "USER_DATA/LOAD_ERROR";
@@ -7,12 +9,12 @@ export const USER_DATA_SAVE_ERROR = "USER_DATA/SAVE_ERROR";
 
 export interface UserDataLoadStart {
   type: typeof USER_DATA_LOAD_START;
-  payload: IUser;
+  payload: User;
 }
 
 export interface UserDataLoadSuccess {
   type: typeof USER_DATA_LOAD_SUCCESS;
-  payload: IUser;
+  payload: User;
 }
 
 export interface UserDataLoadError {
@@ -26,7 +28,7 @@ export interface UserDataSaveStart {
 
 export interface UserDataSaveSuccess {
   type: typeof USER_DATA_SAVE_SUCCESS;
-  payload: IUser;
+  payload: User;
 }
 
 export interface UserDataSaveError {
