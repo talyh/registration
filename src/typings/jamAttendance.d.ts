@@ -1,15 +1,23 @@
-// TODO - Review this agains annotation
+enum Roles {
+  Programmer,
+  Artist3D,
+  Artist2D,
+  Designer,
+  Sound
+}
+
 export class JamAttendance {
+  gbStudent: boolean;
   gbRoom?: string;
-  role: string;
-  participation: string;
+  role: Role;
+  participation: Participation;
   baby: boolean;
-  team?: ITeam;
   hardwareNeeded?: string;
   rage?: string;
   comments?: string;
 
   constructor(
+    gbStudent,
     gbRoom,
     role,
     participation,
@@ -19,6 +27,7 @@ export class JamAttendance {
     rage,
     comments
   ) {
+    this.gbStudent = gbStudent;
     this.gbRoom = gbRoom;
     this.role = role;
     this.participation = participation;

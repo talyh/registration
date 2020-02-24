@@ -4,6 +4,7 @@ import { JamAttendance } from "../typings/jamAttendance.d";
 export const jamAttendanceConverter = {
   toFirestore: (jamAttendance: JamAttendance) => {
     return {
+      gbStudent: jamAttendance.gbStudent || false,
       gbRoom: jamAttendance.gbRoom || "",
       role: jamAttendance.role || "",
       participation: jamAttendance.participation || "",
@@ -16,6 +17,7 @@ export const jamAttendanceConverter = {
   fromFirestore: (snapshot: any, options: any) => {
     const data = snapshot.data(options);
     return new JamAttendance(
+      data.gbStudent,
       data.gbRoom,
       data.role,
       data.participation,

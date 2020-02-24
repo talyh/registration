@@ -4,16 +4,13 @@ import "firebase/firestore";
 import { userConverter } from "./userConverter";
 import { jamAttendanceConverter } from "./jamAttendanceConverter";
 import { collections } from "../firebaseConfig";
-import { User } from "../typings/user";
-import { jamsAttended } from "../jamConfig";
+import { User } from "../typings/User";
 
 export const getSavedUserData = async (uid: string) => {
   try {
     if (!uid) {
       throw new Error("Invalid user id");
     }
-
-    let user;
 
     // TODO - Find a way to abstract this so it's not repeated throughout
     const userRef = firebase
@@ -27,25 +24,32 @@ export const getSavedUserData = async (uid: string) => {
       .doc(new Date().getFullYear().toString())
       .withConverter(jamAttendanceConverter)
       .get();
+
     if (record.exists) {
+      let user = record.data() as User;
+
       // adjust birthDate because firestore has issues with Dates
-      const birthDate = ((record?.data()
-        ?.birthDate as unknown) as firebase.firestore.Timestamp).toDate();
+      const birthDate =
+        record?.data()?.birthDate &&
+        ((record?.data()
+          ?.birthDate as unknown) as firebase.firestore.Timestamp).toDate();
+      user.birthDate = birthDate;
 
       // adjust jamsAttended (likely won't be needed after the first year using this new form)
-      if (record.data()?.jamsAttended?.length === 0) {
+      const jamsAttended = record.data()?.jamsAttended || [];
+      if (jamsAttended.length === 0) {
         jamsAttended.push(new Date().getFullYear());
       }
-      user = record.data() as User;
-      user.birthDate = birthDate;
+      user.jamsAttended = jamsAttended;
+
       if (currentJam.exists) {
         user.currentJam = currentJam.data() as any;
       }
+
+      return user;
     } else {
       throw new Error("Record not found");
     }
-
-    return user;
   } catch (error) {
     // TODO - determine how to handle errors
     console.error(error);

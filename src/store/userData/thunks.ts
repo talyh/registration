@@ -8,23 +8,23 @@ import {
   userDataSaveSuccess,
   userDataSaveError
 } from "./actions";
-import { User } from "../../typings/user";
+import { User } from "../../typings/User";
 
-export const loadUserDataThunk = (uid: string, user: User) => async (
-  dispatch: Dispatch
-) => {
-  dispatch(userDataLoadStart(user));
+export const loadUserDataThunk = (
+  uid: string,
+  initialUserValues: {
+    name: string;
+    email: string;
+  }
+) => async (dispatch: Dispatch) => {
+  dispatch(userDataLoadStart());
 
   try {
     let userData: any = await getSavedUserData(uid);
 
     // create a record of the user if they don't have one
     if (!userData) {
-      userData = {
-        name: user.name,
-        email: user.email,
-        jamsAttended: [new Date().getFullYear()]
-      };
+      userData = initialUserValues;
       saveUserData(uid, userData);
     }
 

@@ -1,4 +1,4 @@
-export const jamName = `TOJam ${new Date().getFullYear()}`;
+export const jamName = `TOJam ${new Date().getFullYear()} - The Phoenix Jam`;
 
 export const ocuppation = ["Hobbyst", "Professional", "Student"];
 
@@ -19,6 +19,8 @@ export const jamsAttended = [
 
 export const gbRoom = ["THESE VALUES ARE TEMPORARY!!", "Room A", "Room B"];
 
+export const participation = ["Solo", "Team", "Floater"];
+
 export const roles = [
   "Programmer",
   "Artist3D",
@@ -27,7 +29,12 @@ export const roles = [
   "Sound"
 ];
 
-export const participation = ["Solo", "Team", "Floater"];
+export const hardwareNeeded = {
+  bringingLaptop: "A Laptop - NO external monitor",
+  bringingLaptopMonitor: "A Laptop + external monitor",
+  bringingFullMachine: "A Full Machine (monitor, network card)",
+  notBringingComputer: "Nothing. Give me a George Brown machine"
+};
 
 export const rage = [
   "Wet Bricks",

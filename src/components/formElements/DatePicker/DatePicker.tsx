@@ -29,7 +29,7 @@ export const DatePicker = ({
   useCustomStyleVariables();
 
   return (
-    <FormArea active={meta.active} error={meta.error}>
+    <FormArea active={meta.active} error={meta.visited && meta.error}>
       <Label required={required} htmlFor={name} display="above">
         {label}
       </Label>

@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../store";
 import { saveUserDataThunk } from "../../store/userData/thunks";
-import { User } from "../../typings/user";
+import { User } from "../../typings/User";
 
 export const useStore = () => {
   const dispatch = useDispatch();
@@ -21,5 +21,3 @@ export const useStore = () => {
     saveUser
   };
 };
-
-export default useStore;

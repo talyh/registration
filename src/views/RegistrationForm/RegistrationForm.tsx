@@ -18,22 +18,29 @@ import MessagePop from "../../components/MessagePop";
 import Spinner from "../../components/Spinner";
 import * as formValues from "../../jamConfig";
 import routes from "../../router/routes";
-import { User } from "../../typings/user";
+import { User } from "../../typings/User";
 
 const RegistrationForm = () => {
   const { uid, user, loading, saving, saveUser } = useStore();
 
   // TODO - this should probably be a Util, especially considering token validation
   const checkIfAuthenticated = (uid: string): boolean => uid !== "";
-  const validate = (values: any) => {
-    const errors: any = {};
+  const validate = (values: User) => {
+    const errors: any = { currentJam: {} };
+
+    console.log("errors", errors);
+    console.log(values);
+    console.log(
+      "hardware needed error",
+      values.currentJam && !values.currentJam.hardwareNeeded
+    );
     if (!values.name) {
       errors.name = "Required";
     }
     if (!values.email) {
       errors.email = "Required";
     }
-    if (values.jamsAttended.length < 1) {
+    if (values.jamsAttended && values.jamsAttended.length < 1) {
       errors.jamsAttended = "Required";
     }
     if (values.phone && values.phone.length !== 14) {
@@ -42,10 +49,23 @@ const RegistrationForm = () => {
     if (!values.birthDate) {
       errors.birthDate = "Required";
     }
+    if (
+      values.currentJam &&
+      values.currentJam.gbStudent &&
+      !values.currentJam.gbRoom
+    ) {
+      errors.currentJam.gbRoom = "Required";
+    }
+    if (values.currentJam && !values.currentJam.hardwareNeeded) {
+      errors.currentJam.hardwareNeeded = "Required";
+    }
+    if (values.currentJam && !values.currentJam.role) {
+      errors.currentJam.role = "Required";
+    }
     return errors;
   };
-  const submit = async (data: User) => {
-    await saveUser(uid, data);
+  const submit = async (user: User) => {
+    await saveUser(uid, user);
   };
 
   const renderPage = () => {
@@ -85,7 +105,7 @@ const RegistrationForm = () => {
                 />
                 <Dropdown
                   label="Ocupation"
-                  name="ocupation"
+                  name="occupation"
                   values={formValues.ocuppation}
                 />
                 <Input
@@ -99,14 +119,14 @@ const RegistrationForm = () => {
                   type="url"
                   placeholder="http://www.shunli.ca"
                 />
-                <DatePicker label="BirthDate" name="birthDate" />
+                <DatePicker label="BirthDate" name="birthDate" required />
               </FormSection>
-              <FormSection label="Jam Stuff">
+              <FormSection label="Jam Participation">
                 {/* TODO - This selection probably only makes sense for the first year, to capture some historical data 
                 (ie. is this a veteran or not, but there's no point in presenting this field every year) */}
                 <OptionsGroup
-                  name="jamsAttended"
                   label="Jams Attended"
+                  name="jamsAttended"
                   valuesArray={formValues.jamsAttended}
                   required
                   shouldDisable={(option: number) =>
@@ -116,30 +136,61 @@ const RegistrationForm = () => {
                 />
                 <BooleanSelection
                   label="I'm a GB Student at this campus!"
-                  name="gbStudent"
+                  name="currentJam.gbStudent"
                 />
-                <Condition when="gbStudent" is={true}>
+                <Condition when="currentJam.gbStudent" is={true}>
                   <Dropdown
                     label="I'll use this GB Room"
-                    name="gbRoom"
+                    name="currentJam.gbRoom"
                     values={formValues.gbRoom}
+                    required
+                    conditional
                   />
                 </Condition>
-                {/* Add Team with roles and Floaters stuff */}
-                {/* Add Computer type */}
-                <BooleanSelection
-                  label="I'll have a toddler visting me!"
-                  name="babyComing"
+                <Dropdown
+                  label="I'll bring"
+                  name="currentJam.hardwareNeeded"
+                  values={Object.keys(formValues.hardwareNeeded)}
+                  valuesLabels={Object.values(formValues.hardwareNeeded)}
+                  required
                 />
+                <Dropdown
+                  label="I'm a"
+                  name="currentJam.role"
+                  values={formValues.roles}
+                  required
+                />
+                {
+                  // TODO IMMEDIATE - ADD Programmer path
+                  // TODO IMMEDIATE 2 - ADD Floater path
+                  // TODO IMMEDIATE 3 = ADD Team path
+                  // role Programmer, Artist, Designer, Sound
+                  // selection Individual / Team / Floater
+                  // if Individual
+                  //     Floaters Needed [multiselect]
+                  // if Team
+                  //
+                  //
+                  // if Floater
+                  //     <all good>
+                }
+                {/* Add Team with roles and Floaters stuff */}
               </FormSection>
               <FormSection label="Finally">
+                <BooleanSelection
+                  label="I'll have a toddler visting me!"
+                  name="currentJam.babyComing"
+                />
                 <Dropdown
                   label="Choose one"
-                  name="rage"
+                  name="currentJam.rage"
                   values={formValues.rage}
                 />
-                <Input label="Comments" name="comments" component="textarea" />
-                {/* Add comments */}
+                <Input
+                  label="Comments"
+                  name="currentJam.comments"
+                  component="textarea"
+                />
               </FormSection>
               <ButtonContainer>
                 <SubmitButton

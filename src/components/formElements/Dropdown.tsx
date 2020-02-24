@@ -8,26 +8,37 @@ interface IDropdownProps {
   name: string;
   label: string;
   values: Array<string | number>;
+  valuesLabels?: Array<string>;
   required?: boolean;
+  conditional?: boolean;
 }
 
 export const Dropdown = ({
   name,
   label,
   values,
-  required = false
+  valuesLabels,
+  required = false,
+  conditional = false
 }: IDropdownProps) => {
   const { meta } = useField(name);
+  console.log(`${name} meta: `, meta);
   return (
-    <FormArea active={meta.active} error={meta.error}>
+    <FormArea
+      active={meta.active}
+      error={meta.visited && meta.error}
+      conditional={conditional}
+    >
       <Label required={required} htmlFor={name} display="above">
         {label}
       </Label>
       <FormField name={name} component="select">
-        {!required && <option value="">----Select a value----</option>}
-        {values.map(value => (
+        <option value="">----Select a value----</option>
+        {values.map((value, index) => (
           <option value={value} key={value}>
-            {value}
+            {valuesLabels && valuesLabels.length === values.length
+              ? valuesLabels[index]
+              : value}
           </option>
         ))}
       </FormField>

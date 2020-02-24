@@ -26,8 +26,9 @@ export const Input = ({
   component = "input"
 }: IInputProps) => {
   const { meta } = useField(name);
+
   return (
-    <FormArea active={meta.active} error={meta.error}>
+    <FormArea active={meta.active} error={meta.visited && meta.error}>
       <Label required={required} htmlFor={name} display="above">
         {label}
       </Label>

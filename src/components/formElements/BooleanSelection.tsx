@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Field, useField } from "react-final-form";
 import { FormArea, Label, ErrorMessage } from "../formElements";
-import colors from "../../colors";
 
 interface IBooleanSelectionProps {
   name: string;
@@ -12,7 +11,7 @@ interface IBooleanSelectionProps {
 export const BooleanSelection = ({ name, label }: IBooleanSelectionProps) => {
   const { meta } = useField(name);
   return (
-    <FormArea active={meta.active} error={meta.error}>
+    <FormArea active={meta.active} error={meta.visited && meta.error}>
       <Container>
         <Label htmlFor={name} display="inline">
           {label}

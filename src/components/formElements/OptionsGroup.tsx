@@ -39,7 +39,7 @@ export const OptionsGroup = ({
   const { meta } = useField(name);
 
   return (
-    <FormArea height={height} error={meta.error}>
+    <FormArea height={height} error={meta.visited && meta.error}>
       <Label
         required={required}
         htmlFor={name}

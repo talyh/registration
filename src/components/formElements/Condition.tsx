@@ -3,9 +3,9 @@ import { useField } from "react-final-form";
 import styled from "styled-components";
 
 interface IConditionProps {
-  when: string;
-  is: string | number | boolean;
-  children: React.ReactNode;
+  when: string; // field to watch
+  is: string | number | boolean; // value to watch
+  children: React.ReactNode; // content to render if condition is met
 }
 
 export const Condition = ({ when, is, children }: IConditionProps) => {

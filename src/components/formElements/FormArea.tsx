@@ -6,10 +6,11 @@ interface IFormAreaProps {
   error?: boolean;
   active?: boolean;
   height?: string;
+  conditional?: boolean;
 }
 
 export const FormArea = styled.div<IFormAreaProps>`
-  width: 98%;
+  width: ${props => (props.conditional ? "100%" : "98%")};
   position: relative;
   display: flex;
   align-items: center;

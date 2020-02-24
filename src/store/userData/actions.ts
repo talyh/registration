@@ -1,11 +1,8 @@
 import * as actionTypes from "./actionTypes";
-import { User } from "../../typings/user";
+import { User } from "../../typings/User";
 
-export const userDataLoadStart = (
-  userData: User
-): actionTypes.UserDataActionTypes => ({
-  type: actionTypes.USER_DATA_LOAD_START,
-  payload: userData
+export const userDataLoadStart = (): actionTypes.UserDataActionTypes => ({
+  type: actionTypes.USER_DATA_LOAD_START
 });
 
 export const userDataLoadSuccess = (

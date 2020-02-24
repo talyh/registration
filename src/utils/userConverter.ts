@@ -1,4 +1,4 @@
-import { User } from "../typings/user.d";
+import { User } from "../typings/User";
 
 // converter to ensure type consistency back and forth firebase
 export const userConverter = {
