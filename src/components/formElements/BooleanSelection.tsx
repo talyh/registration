@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Field, useField } from "react-final-form";
 import { FormArea, Label, ErrorMessage } from "../formElements";
+import colors from "../../colors";
 
 interface IBooleanSelectionProps {
   name: string;
@@ -28,7 +29,7 @@ const Container = styled.div`
   margin: 0px 5px;
   padding: 10px 20px 0px 20px;
   height: 50px;
-  background-color: white;
+  background-color: ${colors.booleanSelection.background};
   display: flex;
   align-items: center;
 `;

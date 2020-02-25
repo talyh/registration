@@ -128,6 +128,9 @@ export default {
       background: transparent
     }
   },
+  booleanSelection: {
+    background: white
+  },
   messagePop: {
     screenbackground: ligthGrey_50,
     feedback: {
