@@ -1,4 +1,4 @@
-import { JamAttendance } from "./jamAttendance";
+import { JamAttendance } from "./JamAttendance";
 
 // this has to be a class to allow conversion to and from Firebase
 export class User {
@@ -11,7 +11,7 @@ export class User {
   website?: string;
   birthDate?: Date | null;
   jamsAttended?: Array<number>;
-  currentJam?: JamAttendance;
+  currentJam: JamAttendance;
 
   constructor(
     name: string,
@@ -22,7 +22,8 @@ export class User {
     company: string = "",
     website: string = "",
     birthDate: Date | null = null,
-    jamsAttended: Array<number> = [new Date().getFullYear()]
+    jamsAttended: Array<number> = [new Date().getFullYear()],
+    currentJam = new JamAttendance()
   ) {
     this.name = name;
     this.email = email;
@@ -33,6 +34,7 @@ export class User {
     this.website = website;
     this.birthDate = birthDate;
     this.jamsAttended = jamsAttended;
+    this.currentJam = currentJam;
   }
   toString() {
     return this.name + ", " + this.email;

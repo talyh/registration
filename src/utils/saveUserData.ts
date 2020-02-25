@@ -4,7 +4,7 @@ import "firebase/firestore";
 import { userConverter } from "./userConverter";
 import { jamAttendanceConverter } from "./jamAttendanceConverter";
 import { User } from "../typings/User";
-import { JamAttendance } from "../typings/jamAttendance";
+import { JamAttendance } from "../typings/JamAttendance";
 import { collections } from "../firebaseConfig";
 
 export const saveUserData = async (uid: string, data: any) => {
@@ -25,16 +25,21 @@ export const saveUserData = async (uid: string, data: any) => {
       data.jamsAttended
     );
 
-    const jamAttendanceData: JamAttendance = {
-      gbStudent: data.currentJam?.gbStudent || false,
-      gbRoom: data.currentJam?.gbRoom || "",
-      role: data.currentJam?.role || "",
-      participation: data.currentJam?.participation || "",
-      baby: data.currentJam?.baby || false,
-      hardwareNeeded: data.currentJam?.hardwareNeeded || "",
-      rage: data.currentJam?.rage || "",
-      comments: data.currentJam?.comments || ""
-    };
+    const jamAttendanceData = new JamAttendance(
+      data.currentJam?.gbStudent,
+      data.currentJam?.gbRoom,
+      data.currentJam?.participation,
+      data.currentJam?.role,
+      data.currentJam?.floatersNeeded,
+      data.currentJam?.remote,
+      data.currentJam?.hardwareNeeded,
+      data.currentJam?.baby,
+      data.currentJam?.rage,
+      data.currentJam?.comments,
+      data.currentJam?.team // TODO - THIS!
+    );
+
+    jamAttendanceData.checkConflicts(); // TODO - This has to feed back into the form
 
     await firebase.firestore().runTransaction(async transaction => {
       const user = firebase

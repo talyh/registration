@@ -6,12 +6,12 @@ export const userConverter = {
     return {
       name: user.name,
       email: user.email,
-      nickname: user.nickname || "",
-      phone: user.phone || "",
-      occupation: user.occupation || "",
-      company: user.company || "",
-      website: user.website || "",
-      birthDate: user.birthDate || "",
+      nickname: user.nickname,
+      phone: user.phone,
+      occupation: user.occupation,
+      company: user.company,
+      website: user.website,
+      birthDate: user.birthDate,
       jamsAttended: user.jamsAttended
     };
   },

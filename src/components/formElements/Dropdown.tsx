@@ -22,7 +22,7 @@ export const Dropdown = ({
   conditional = false
 }: IDropdownProps) => {
   const { meta } = useField(name);
-  console.log(`${name} meta: `, meta);
+
   return (
     <FormArea
       active={meta.active}

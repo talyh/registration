@@ -1,31 +1,39 @@
-import { JamAttendance } from "../typings/jamAttendance.d";
+import { JamAttendance } from "../typings/JamAttendance";
 
 // converter to ensure type consistency back and forth firebase
 export const jamAttendanceConverter = {
   toFirestore: (jamAttendance: JamAttendance) => {
     return {
-      gbStudent: jamAttendance.gbStudent || false,
-      gbRoom: jamAttendance.gbRoom || "",
-      role: jamAttendance.role || "",
-      participation: jamAttendance.participation || "",
-      baby: jamAttendance.baby || false,
-      hardwareNeeded: jamAttendance.hardwareNeeded || "",
-      rage: jamAttendance.rage || "",
-      comments: jamAttendance.comments || ""
+      gbStudent: jamAttendance.gbStudent,
+      gbRoom: jamAttendance.gbRoom,
+      participation: jamAttendance.participation,
+      role: jamAttendance.role,
+      floatersNeeded: jamAttendance.floatersNeeded,
+      remote: jamAttendance.remote,
+      hardwareNeeded: jamAttendance.hardwareNeeded,
+      baby: jamAttendance.baby,
+      rage: jamAttendance.rage,
+      comments: jamAttendance.comments,
+      team: jamAttendance.team // TODO - THIS!
     };
   },
-  fromFirestore: (snapshot: any, options: any) => {
+  fromFirestore: (
+    snapshot: firebase.firestore.QueryDocumentSnapshot,
+    options: firebase.firestore.SnapshotOptions
+  ) => {
     const data = snapshot.data(options);
     return new JamAttendance(
       data.gbStudent,
       data.gbRoom,
-      data.role,
       data.participation,
-      data.baby,
-      data.team,
+      data.role,
+      data.floatersNeeded,
+      data.remote,
       data.hardwareNeeded,
+      data.baby,
       data.rage,
-      data.comments
+      data.comments,
+      data.team // TODO - THIS!
     );
   }
 };

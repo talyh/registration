@@ -5,6 +5,7 @@ import { userConverter } from "./userConverter";
 import { jamAttendanceConverter } from "./jamAttendanceConverter";
 import { collections } from "../firebaseConfig";
 import { User } from "../typings/User";
+import { JamAttendance } from "../typings/JamAttendance";
 
 export const getSavedUserData = async (uid: string) => {
   try {
@@ -43,7 +44,7 @@ export const getSavedUserData = async (uid: string) => {
       user.jamsAttended = jamsAttended;
 
       if (currentJam.exists) {
-        user.currentJam = currentJam.data() as any;
+        user.currentJam = currentJam.data() as JamAttendance;
       }
 
       return user;

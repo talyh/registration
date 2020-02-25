@@ -4,17 +4,28 @@ import { Field, useField } from "react-final-form";
 import { FormArea, Label, ErrorMessage } from "../formElements";
 import colors from "../../colors";
 
+type OptionValue = string | number;
+type OptionWidth = "short" | "wide";
+
 interface IOptionGroupProps {
   name: string;
   label: string;
   height?: string;
-  valuesArray: Array<number>;
-  required: boolean;
-  shouldDisable?: (arg: number) => boolean;
+  valuesArray: Array<OptionValue>;
+  required?: boolean;
+  shouldDisable?: (arg: OptionValue) => boolean;
+  optionsWidth?: OptionWidth;
 }
 
-const Option = ({ name, option, shouldDisable }: any) => (
-  <CheckBoxAsButton key={option}>
+interface IOption {
+  name: string;
+  option: OptionValue;
+  shouldDisable?: (arg: OptionValue) => boolean;
+  optionWidth?: OptionWidth;
+}
+
+const Option = ({ name, option, shouldDisable, optionWidth }: IOption) => (
+  <CheckBoxAsButton key={option} optionWidth={optionWidth || "short"}>
     <label>
       <Field
         name={name}
@@ -34,7 +45,8 @@ export const OptionsGroup = ({
   valuesArray,
   required = false,
   height,
-  shouldDisable
+  shouldDisable,
+  optionsWidth
 }: IOptionGroupProps) => {
   const { meta } = useField(name);
 
@@ -55,6 +67,7 @@ export const OptionsGroup = ({
             option={option}
             name={name}
             shouldDisable={shouldDisable}
+            optionWidth={optionsWidth}
           />
         ))}
         <ErrorMessage name={name} />
@@ -69,7 +82,11 @@ const CheckBoxAsButtonGroup = styled.div`
   margin: 10px 20px;
 `;
 
-const CheckBoxAsButton = styled.div`
+interface ICheckBoxAsButtonProps {
+  optionWidth?: OptionWidth;
+}
+
+const CheckBoxAsButton = styled.div<ICheckBoxAsButtonProps>`
   margin: 4px;
   background-color: ${colors.optionGroup.background};
   border: 1px solid ${colors.optionGroup.border};
@@ -78,7 +95,7 @@ const CheckBoxAsButton = styled.div`
 
   label {
     float: left;
-    width: 4em;
+    width: ${props => (props.optionWidth === "short" ? "100px" : "200px")};
   }
 
   label span {

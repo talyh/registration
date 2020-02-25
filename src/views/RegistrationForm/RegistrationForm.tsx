@@ -26,14 +26,8 @@ const RegistrationForm = () => {
   // TODO - this should probably be a Util, especially considering token validation
   const checkIfAuthenticated = (uid: string): boolean => uid !== "";
   const validate = (values: User) => {
-    const errors: any = { currentJam: {} };
-
-    console.log("errors", errors);
-    console.log(values);
-    console.log(
-      "hardware needed error",
-      values.currentJam && !values.currentJam.hardwareNeeded
-    );
+    const addCurrentJam = (errors: any) => ({ ...errors, currentJam: {} });
+    let errors: any = {};
     if (!values.name) {
       errors.name = "Required";
     }
@@ -54,13 +48,20 @@ const RegistrationForm = () => {
       values.currentJam.gbStudent &&
       !values.currentJam.gbRoom
     ) {
+      errors = addCurrentJam(errors);
       errors.currentJam.gbRoom = "Required";
     }
     if (values.currentJam && !values.currentJam.hardwareNeeded) {
+      errors = addCurrentJam(errors);
       errors.currentJam.hardwareNeeded = "Required";
     }
     if (values.currentJam && !values.currentJam.role) {
+      errors = addCurrentJam(errors);
       errors.currentJam.role = "Required";
+    }
+    if (values.currentJam && !values.currentJam.participation) {
+      errors = addCurrentJam(errors);
+      errors.currentJam.participation = "Required";
     }
     return errors;
   };
@@ -75,7 +76,13 @@ const RegistrationForm = () => {
           initialValues={user as User}
           onSubmit={submit}
           validate={validate}
-          render={({ errors, handleSubmit, submitting, submitSucceeded }) => (
+          render={({
+            errors,
+            handleSubmit,
+            submitting,
+            submitSucceeded,
+            values
+          }) => (
             <form onSubmit={handleSubmit}>
               <FormSection label="The Basics">
                 <Input
@@ -129,16 +136,19 @@ const RegistrationForm = () => {
                   name="jamsAttended"
                   valuesArray={formValues.jamsAttended}
                   required
-                  shouldDisable={(option: number) =>
-                    option === new Date().getFullYear()
-                  }
+                  shouldDisable={option => option === new Date().getFullYear()}
                   height="100px"
                 />
+
+                {/* gbRoom is only available for gbStudents */}
                 <BooleanSelection
                   label="I'm a GB Student at this campus!"
                   name="currentJam.gbStudent"
                 />
-                <Condition when="currentJam.gbStudent" is={true}>
+                <Condition
+                  baseField="currentJam.gbStudent"
+                  compare={(fieldValue: boolean) => fieldValue}
+                >
                   <Dropdown
                     label="I'll use this GB Room"
                     name="currentJam.gbRoom"
@@ -147,6 +157,49 @@ const RegistrationForm = () => {
                     conditional
                   />
                 </Condition>
+
+                {/* If Solo, the Role is necessarily Programmer, and can ask for Floaters, and can't be Remote */}
+                {/* If Team, the Role can be any of the available for Team, can ask for Floaters, and can be Remote */}
+                {/* If Floater, the Role can be any of the available for Floater, can't ask for Floaters, and can't be Remote */}
+                <Dropdown
+                  label="I'll be participating as"
+                  name="currentJam.participation"
+                  values={formValues.participation}
+                  required
+                />
+                <Condition
+                  baseField="currentJam.participation"
+                  compare={(value: string) => value !== ""}
+                >
+                  <Dropdown
+                    label="Doing"
+                    name="currentJam.role"
+                    // @ts-ignore - Even though the key strings are the same, TS didn't like converting
+                    values={formValues.roles[values.currentJam.participation]}
+                    required
+                  />
+                </Condition>
+                <Condition
+                  baseField="currentJam.participation"
+                  compare={(value: string) =>
+                    value !== "" && value.search(/(Floater)/gm) < 0
+                  }
+                >
+                  <OptionsGroup
+                    label="Floaters Needed"
+                    name="currentJam.floatersNeeded"
+                    valuesArray={formValues.floatersRequest}
+                    optionsWidth="wide"
+                    height="100px"
+                  />
+                </Condition>
+                <Condition
+                  baseField="currentJam.participation"
+                  compare={(value: string) => value === "Team"}
+                >
+                  <BooleanSelection label="Remote" name="currentJam.remote" />
+                </Condition>
+
                 <Dropdown
                   label="I'll bring"
                   name="currentJam.hardwareNeeded"
@@ -154,27 +207,6 @@ const RegistrationForm = () => {
                   valuesLabels={Object.values(formValues.hardwareNeeded)}
                   required
                 />
-                <Dropdown
-                  label="I'm a"
-                  name="currentJam.role"
-                  values={formValues.roles}
-                  required
-                />
-                {
-                  // TODO IMMEDIATE - ADD Programmer path
-                  // TODO IMMEDIATE 2 - ADD Floater path
-                  // TODO IMMEDIATE 3 = ADD Team path
-                  // role Programmer, Artist, Designer, Sound
-                  // selection Individual / Team / Floater
-                  // if Individual
-                  //     Floaters Needed [multiselect]
-                  // if Team
-                  //
-                  //
-                  // if Floater
-                  //     <all good>
-                }
-                {/* Add Team with roles and Floaters stuff */}
               </FormSection>
               <FormSection label="Finally">
                 <BooleanSelection
