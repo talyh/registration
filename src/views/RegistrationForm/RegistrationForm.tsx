@@ -169,7 +169,9 @@ const RegistrationForm = () => {
                 />
                 <Condition
                   baseField="currentJam.participation"
-                  compare={(value: string) => value !== ""}
+                  compare={(value: string) =>
+                    value !== "" && value !== formValues.Participation.Team
+                  }
                 >
                   <Dropdown
                     label="Doing"
@@ -177,6 +179,7 @@ const RegistrationForm = () => {
                     // @ts-ignore - Even though the key strings are the same, TS didn't like converting
                     values={formValues.roles[values.currentJam.participation]}
                     required
+                    conditional
                   />
                 </Condition>
                 <Condition
@@ -192,11 +195,21 @@ const RegistrationForm = () => {
                     optionsWidth="wide"
                     height="100px"
                   />
+                  <Input
+                    label="Game Idea"
+                    name="currentJam.gameIdea"
+                    component="textarea"
+                    conditional
+                  />
                 </Condition>
                 <Condition
                   baseField="currentJam.participation"
-                  compare={(value: string) => value === "Team"}
+                  compare={(value: string) =>
+                    value === formValues.Participation.Team
+                  }
                 >
+                  {/* TODO IMMEDIATE - Team */}
+
                   <BooleanSelection label="Remote" name="currentJam.remote" />
                 </Condition>
 

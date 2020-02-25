@@ -11,10 +11,10 @@ export const jamAttendanceConverter = {
       floatersNeeded: jamAttendance.floatersNeeded,
       remote: jamAttendance.remote,
       hardwareNeeded: jamAttendance.hardwareNeeded,
+      gameIdea: jamAttendance.gameIdea,
       baby: jamAttendance.baby,
       rage: jamAttendance.rage,
-      comments: jamAttendance.comments,
-      team: jamAttendance.team // TODO - THIS!
+      comments: jamAttendance.comments
     };
   },
   fromFirestore: (
@@ -30,10 +30,10 @@ export const jamAttendanceConverter = {
       data.floatersNeeded,
       data.remote,
       data.hardwareNeeded,
+      data.gameIdea,
       data.baby,
       data.rage,
-      data.comments,
-      data.team // TODO - THIS!
+      data.comments
     );
   }
 };

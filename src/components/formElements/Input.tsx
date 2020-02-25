@@ -13,6 +13,7 @@ interface IInputProps {
   parse?: any;
   maxLength?: number;
   component?: "input" | "textarea";
+  conditional?: boolean;
 }
 
 export const Input = ({
@@ -23,12 +24,17 @@ export const Input = ({
   required = false,
   parse,
   maxLength,
-  component = "input"
+  component = "input",
+  conditional = false
 }: IInputProps) => {
   const { meta } = useField(name);
 
   return (
-    <FormArea active={meta.active} error={meta.visited && meta.error}>
+    <FormArea
+      active={meta.active}
+      error={meta.visited && meta.error}
+      conditional={conditional}
+    >
       <Label required={required} htmlFor={name} display="above">
         {label}
       </Label>

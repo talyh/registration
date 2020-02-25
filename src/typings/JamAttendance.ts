@@ -1,3 +1,4 @@
+import { Team } from "./Team";
 import { roles } from "../jamConfig";
 
 export class JamAttendance {
@@ -8,10 +9,11 @@ export class JamAttendance {
   floatersNeeded: Array<string>;
   remote: boolean;
   hardwareNeeded: string;
+  gameIdea: string;
   baby: boolean;
   rage?: string;
   comments?: string;
-  team: string; // TODO - THIS!
+  // team?: Team;
 
   constructor(
     gbStudent = false,
@@ -21,10 +23,11 @@ export class JamAttendance {
     floatersNeeded = [],
     remote = false,
     hardwareNeeded = "",
+    gameIdea = "",
     baby = false,
     rage = "",
-    comments = "",
-    team = "" // TODO - THIS!
+    comments = ""
+    // team = new Team()
   ) {
     this.gbStudent = gbStudent;
     this.gbRoom = gbRoom;
@@ -32,11 +35,12 @@ export class JamAttendance {
     this.role = role;
     this.floatersNeeded = floatersNeeded;
     this.remote = remote;
+    this.gameIdea = gameIdea;
     this.hardwareNeeded = hardwareNeeded;
     this.baby = baby;
     this.rage = rage;
     this.comments = comments;
-    this.team = team; // TODO - THIS!
+    // this.team = team;
   }
 
   checkConflicts = () => {
