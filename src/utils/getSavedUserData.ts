@@ -1,8 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import { userConverter } from "./userConverter";
-import { jamAttendanceConverter } from "./jamAttendanceConverter";
+import { userConverter, jamAttendanceConverter } from "./firebaseDataConverter";
 import { collections } from "../firebaseConfig";
 import { User } from "../typings/User";
 import { JamAttendance } from "../typings/JamAttendance";
