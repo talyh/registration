@@ -24,8 +24,13 @@ interface IOption {
   optionWidth?: OptionWidth;
 }
 
-const Option = ({ name, option, shouldDisable, optionWidth }: IOption) => (
-  <CheckBoxAsButton key={option} optionWidth={optionWidth || "short"}>
+const Option = ({
+  name,
+  option,
+  shouldDisable,
+  optionWidth = "short"
+}: IOption) => (
+  <CheckBoxAsButton key={option} optionWidth={optionWidth}>
     <label>
       <Field
         name={name}

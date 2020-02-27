@@ -221,6 +221,12 @@ const RegistrationForm = () => {
                          <BooleanSelection label="Remote" name="currentJam.participation.remote" />
                 </Condition> */}
 
+                {/* TODO IMMEDIATE - Add field name as input only */}
+                {/* TODO IMMEDIATE - Add remote field */}
+                {/* TODO IMMEDIATE - Save team to the DB */}
+                {/* TODO IMMEDIATE - Make field name searcheable */}
+                {/* TODO IMMEDIATE - Show team members when team is returned (name, captain, remote) */}
+
                 <Dropdown
                   label="I'll bring"
                   name="currentJam.participation.hardwareNeeded"
