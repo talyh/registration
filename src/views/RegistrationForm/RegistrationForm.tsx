@@ -26,7 +26,27 @@ const RegistrationForm = () => {
   // TODO - this should probably be a Util, especially considering token validation
   const checkIfAuthenticated = (uid: string): boolean => uid !== "";
   const validate = (values: User) => {
-    const addCurrentJam = (errors: any) => ({ ...errors, currentJam: {} });
+    const addCurrentJam = (errors: any) => {
+      if (errors.hasOwnProperty("customJam")) {
+        return errors;
+      }
+
+      return { ...errors, currentJam: {} };
+    };
+    const addParticipation = (errors: any) => {
+      if (
+        errors.hasOwnProperty("customJam") &&
+        errors.customJam.hasOwnProperty("participation")
+      ) {
+        return errors;
+      }
+
+      return {
+        ...errors,
+        currentJam: { participation: {}, ...errors.currentJam }
+      };
+    };
+
     let errors: any = {};
     if (!values.name) {
       errors.name = "Required";
@@ -51,17 +71,23 @@ const RegistrationForm = () => {
       errors = addCurrentJam(errors);
       errors.currentJam.gbRoom = "Required";
     }
-    if (values.currentJam && !values.currentJam.hardwareNeeded) {
-      errors = addCurrentJam(errors);
-      errors.currentJam.hardwareNeeded = "Required";
+    if (values.currentJam && !values.currentJam.participation.type) {
+      errors = addParticipation(errors);
+      errors.currentJam.participation.type = "Required";
     }
-    if (values.currentJam && !values.currentJam.role) {
-      errors = addCurrentJam(errors);
-      errors.currentJam.role = "Required";
+    if (
+      values.currentJam?.participation &&
+      !values.currentJam.participation.hardwareNeeded
+    ) {
+      errors = addParticipation(errors);
+      errors.currentJam.participation.hardwareNeeded = "Required";
     }
-    if (values.currentJam && !values.currentJam.participation) {
-      errors = addCurrentJam(errors);
-      errors.currentJam.participation = "Required";
+    if (
+      values.currentJam?.participation &&
+      !(values.currentJam.participation as any).role
+    ) {
+      errors = addParticipation(errors);
+      errors.currentJam.participation.role = "Required";
     }
     return errors;
   };
@@ -140,6 +166,69 @@ const RegistrationForm = () => {
                   height="100px"
                 />
 
+                {/* If Solo, the Role is necessarily Programmer, and can ask for Floaters, and can't be Remote */}
+                {/* If Team, the Role can be any of the available for Team, can ask for Floaters, and can be Remote */}
+                {/* If Floater, the Role can be any of the available for Floater, can't ask for Floaters, and can't be Remote */}
+                <Dropdown
+                  label="I'll be participating as"
+                  name="currentJam.participation.type"
+                  values={formValues.participation}
+                  required
+                />
+                <Condition
+                  baseField="currentJam.participation.type"
+                  compare={(value: string) =>
+                    value !== "" && value !== formValues.ParticipationType.Team
+                  }
+                >
+                  <Dropdown
+                    label="Doing"
+                    name="currentJam.participation.role"
+                    values={
+                      // @ts-ignore - Even though the key strings are the same, TS didn't like converting
+                      formValues.roles[values.currentJam.participation.type]
+                    }
+                    required
+                    conditional
+                  />
+                </Condition>
+                <Condition
+                  baseField="currentJam.participation.type"
+                  compare={(value: string) =>
+                    value !== "" && value.search(/(Floater)/gm) < 0
+                  }
+                >
+                  <OptionsGroup
+                    label="Floaters Needed"
+                    name="currentJam.participation.floatersNeeded"
+                    valuesArray={formValues.floatersRequest}
+                    optionsWidth="wide"
+                    height="100px"
+                  />
+                  <Input
+                    label="Game Idea"
+                    name="currentJam.participation.gameIdea"
+                    component="textarea"
+                    conditional
+                  />
+                </Condition>
+                {/* <Condition
+                  baseField="currentJam.participation.type"
+                  compare={(value: string) =>
+                    value === formValues.ParticipationType.Team
+                  }
+                >
+                         <BooleanSelection label="Remote" name="currentJam.participation.remote" />
+                </Condition> */}
+
+                <Dropdown
+                  label="I'll bring"
+                  name="currentJam.participation.hardwareNeeded"
+                  values={Object.keys(formValues.hardwareNeeded)}
+                  valuesLabels={Object.values(formValues.hardwareNeeded)}
+                  required
+                />
+
                 {/* gbRoom is only available for gbStudents */}
                 <BooleanSelection
                   label="I'm a GB Student at this campus!"
@@ -157,69 +246,6 @@ const RegistrationForm = () => {
                     conditional
                   />
                 </Condition>
-
-                {/* If Solo, the Role is necessarily Programmer, and can ask for Floaters, and can't be Remote */}
-                {/* If Team, the Role can be any of the available for Team, can ask for Floaters, and can be Remote */}
-                {/* If Floater, the Role can be any of the available for Floater, can't ask for Floaters, and can't be Remote */}
-                <Dropdown
-                  label="I'll be participating as"
-                  name="currentJam.participation"
-                  values={formValues.participation}
-                  required
-                />
-                <Condition
-                  baseField="currentJam.participation"
-                  compare={(value: string) =>
-                    value !== "" && value !== formValues.Participation.Team
-                  }
-                >
-                  <Dropdown
-                    label="Doing"
-                    name="currentJam.role"
-                    // @ts-ignore - Even though the key strings are the same, TS didn't like converting
-                    values={formValues.roles[values.currentJam.participation]}
-                    required
-                    conditional
-                  />
-                </Condition>
-                <Condition
-                  baseField="currentJam.participation"
-                  compare={(value: string) =>
-                    value !== "" && value.search(/(Floater)/gm) < 0
-                  }
-                >
-                  <OptionsGroup
-                    label="Floaters Needed"
-                    name="currentJam.floatersNeeded"
-                    valuesArray={formValues.floatersRequest}
-                    optionsWidth="wide"
-                    height="100px"
-                  />
-                  <Input
-                    label="Game Idea"
-                    name="currentJam.gameIdea"
-                    component="textarea"
-                    conditional
-                  />
-                </Condition>
-                <Condition
-                  baseField="currentJam.participation"
-                  compare={(value: string) =>
-                    value === formValues.Participation.Team
-                  }
-                >
-                  {/* TODO IMMEDIATE - Team */}
-
-                  <BooleanSelection label="Remote" name="currentJam.remote" />
-                </Condition>
-
-                <Dropdown
-                  label="I'll bring"
-                  name="currentJam.hardwareNeeded"
-                  values={Object.keys(formValues.hardwareNeeded)}
-                  valuesLabels={Object.values(formValues.hardwareNeeded)}
-                  required
-                />
               </FormSection>
               <FormSection label="Finally">
                 <BooleanSelection
@@ -237,6 +263,7 @@ const RegistrationForm = () => {
                   component="textarea"
                 />
               </FormSection>
+              <div>{JSON.stringify(errors)}</div>
               <ButtonContainer>
                 <SubmitButton
                   disabled={

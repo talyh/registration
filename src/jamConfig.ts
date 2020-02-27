@@ -26,13 +26,13 @@ export const jamsAttended = [
 
 export const gbRoom = ["THESE VALUES ARE TEMPORARY!!", "Room A", "Room B"];
 
-export enum Participation {
+export enum ParticipationType {
   "Solo" = "Solo",
   "Team" = "Team",
-  "Floater - Graphics" = "Floater - Graphics",
-  "Floater - Audio" = "Floater - Audio"
+  "FloaterGraphics" = "Floater - Graphics",
+  "FloaterAudio" = "Floater - Audio"
 }
-export const participation = Object.keys(Participation);
+export const participation = Object.keys(ParticipationType);
 
 export enum SoloRoles {
   "Programmer" = "Programmer"

@@ -15,7 +15,10 @@ export const userConverter = {
       jamsAttended: user.jamsAttended
     };
   },
-  fromFirestore: (snapshot: any, options: any) => {
+  fromFirestore: (
+    snapshot: firebase.firestore.QueryDocumentSnapshot,
+    options: firebase.firestore.SnapshotOptions
+  ) => {
     const data = snapshot.data(options);
     return new User(
       data.name,
@@ -34,15 +37,10 @@ export const userConverter = {
 export const jamAttendanceConverter = {
   toFirestore: (jamAttendance: JamAttendance) => {
     return {
+      participation: jamAttendance.participation,
       gbStudent: jamAttendance.gbStudent,
       gbRoom: jamAttendance.gbRoom,
-      participation: jamAttendance.participation,
-      role: jamAttendance.role,
-      floatersNeeded: jamAttendance.floatersNeeded,
-      remote: jamAttendance.remote,
-      hardwareNeeded: jamAttendance.hardwareNeeded,
-      gameIdea: jamAttendance.gameIdea,
-      baby: jamAttendance.baby,
+      babyComing: jamAttendance.babyComing,
       rage: jamAttendance.rage,
       comments: jamAttendance.comments
     };
@@ -53,15 +51,10 @@ export const jamAttendanceConverter = {
   ) => {
     const data = snapshot.data(options);
     return new JamAttendance(
+      data.participation,
       data.gbStudent,
       data.gbRoom,
-      data.participation,
-      data.role,
-      data.floatersNeeded,
-      data.remote,
-      data.hardwareNeeded,
-      data.gameIdea,
-      data.baby,
+      data.babyComing,
       data.rage,
       data.comments
     );

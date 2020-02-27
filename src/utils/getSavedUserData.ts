@@ -12,13 +12,13 @@ export const getSavedUserData = async (uid: string) => {
       throw new Error("Invalid user id");
     }
 
-    // TODO - Find a way to abstract this so it's not repeated throughout
     const userRef = firebase
       .firestore()
       .collection(collections.users)
       .doc(uid)
       .withConverter(userConverter);
     const record = await userRef.get();
+
     const currentJam = await record.ref
       .collection(collections.jamAttendance)
       .doc(new Date().getFullYear().toString())

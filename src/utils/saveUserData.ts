@@ -25,24 +25,13 @@ export const saveUserData = async (uid: string, data: any) => {
     );
 
     const jamAttendanceData = new JamAttendance(
+      data.currentJam?.participation,
       data.currentJam?.gbStudent,
       data.currentJam?.gbRoom,
-      data.currentJam?.participation,
-      data.currentJam?.role,
-      data.currentJam?.floatersNeeded,
-      data.currentJam?.remote,
-      data.currentJam?.hardwareNeeded,
-      data.currentJam?.gameIdea,
-      data.currentJam?.baby,
+      data.currentJam?.babyComing,
       data.currentJam?.rage,
       data.currentJam?.comments
-      // data.currentJam?.team // TODO IMMEDIATE - THIS!
     );
-
-    // const team = new Team(
-    //   data.currentJam?.team?.name,
-
-    // );
 
     jamAttendanceData.checkConflicts(); // TODO - This has to feed back into the form
 
