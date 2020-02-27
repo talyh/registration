@@ -11,6 +11,7 @@ import {
   signOutError
 } from "./actions";
 import { loadUserDataThunk } from "../userData/thunks";
+import { User } from "../../typings/User";
 
 const showSignInPopUp = async (provider: firebase.auth.AuthProvider) => {
   const result: any = await firebase.auth().signInWithPopup(provider);
@@ -38,7 +39,7 @@ export const signInThunk = (provider: firebase.auth.AuthProvider) => async (
     const uid: string = user.uid;
     // QUESTION - WHYYYYY TS, WHYYYYYY?
     dispatch(
-      loadUserDataThunk(uid, { name: user.name, email: user.email }) as any
+      loadUserDataThunk(uid, new User(user.displayName, user.email)) as any
     );
 
     return dispatch(signInSuccess(uid));

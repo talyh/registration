@@ -61,6 +61,15 @@ export default {
       }
     }
   },
+  formSection: {
+    container: {
+      border: baseGrey
+    },
+    label: {
+      background: white,
+      text: baseBlue
+    }
+  },
   formLabel: {
     background: white,
     required: baseRed
@@ -77,6 +86,9 @@ export default {
   },
   textField: {
     border: ligthGrey_50
+  },
+  dropdown: {
+    background: white
   },
   errorMessage: {
     background: {
@@ -96,6 +108,28 @@ export default {
       text: white,
       background: baseGreen
     }
+  },
+  datePicker: {
+    container: {
+      border: lightBlue_50,
+      background: white
+    },
+    calendar: {
+      header: {
+        background: baseBlue,
+        text: white
+      },
+      selected: {
+        background: baseBlue,
+        text: white
+      }
+    },
+    input: {
+      background: transparent
+    }
+  },
+  booleanSelection: {
+    background: white
   },
   messagePop: {
     screenbackground: ligthGrey_50,

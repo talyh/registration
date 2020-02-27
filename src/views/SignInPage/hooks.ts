@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AppState } from "../../store";
 import { signInThunk } from "../../store/auth/thunks";
-import { auth } from "firebase";
 
 export const useStore = (redirect: string) => {
   const dispatch = useDispatch();

@@ -1,14 +1,12 @@
 import * as actionTypes from "./actionTypes";
+import { User } from "../../typings/User";
 
-export const userDataLoadStart = (
-  userData: IUser
-): actionTypes.UserDataActionTypes => ({
-  type: actionTypes.USER_DATA_LOAD_START,
-  payload: userData
+export const userDataLoadStart = (): actionTypes.UserDataActionTypes => ({
+  type: actionTypes.USER_DATA_LOAD_START
 });
 
 export const userDataLoadSuccess = (
-  userData: IUser
+  userData: User
 ): actionTypes.UserDataActionTypes => ({
   type: actionTypes.USER_DATA_LOAD_SUCCESS,
   payload: userData
@@ -26,7 +24,7 @@ export const userDataSaveStart = (): actionTypes.UserDataActionTypes => ({
 });
 
 export const userDataSaveSuccess = (
-  userData: IUser
+  userData: User
 ): actionTypes.UserDataActionTypes => ({
   type: actionTypes.USER_DATA_SAVE_SUCCESS,
   payload: userData

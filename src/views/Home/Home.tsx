@@ -13,7 +13,7 @@ import { jamName } from "../../jamConfig";
 
 const Home = () => (
   <Container>
-    <Intro>{`Hi there! What are you intersted in for ${jamName}?`}</Intro>
+    <Intro>{`Hi there! What are you interested in for ${jamName}?`}</Intro>
     <InterestIconsContainer>
       <Link to="/registration">
         <InterestIcon label="Jammer" icon={faGamepad} />

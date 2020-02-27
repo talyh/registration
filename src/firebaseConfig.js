@@ -8,3 +8,9 @@ export default {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
+
+export const collections = {
+  users: "Users",
+  jamAttendance: "JamAttendance",
+  teams: "Teams"
+};
