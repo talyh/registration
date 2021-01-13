@@ -1,4 +1,10 @@
-For the time being, this is hosted at https://tojam-6526c.firebaseapp.com/
+# HISTORY AND CURRENT STATUS
+
+This project was initiated as a revamp to [TOJAM](http://www.tojam.ca/) registration. For a series of reasons, it wasn't completed, and it's now being archived.
+
+------
+
+At the time of creation, this used to be hosted at https://tojam-6526c.firebaseapp.com/, which may or may not work when consumers attempt to access this.
 
 To change values from year to year, focus on `src/jamConfig.ts`.
 
